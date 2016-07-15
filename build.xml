@@ -7,6 +7,7 @@
 	<property name="web.dir" value="war"/>
 	<property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
 	<property name="name" value="springapp"/>
+	<property name="test.dir" value="test"/>
 
 	<path id="master-classpath">
 		<fileset dir="${web.dir}/WEB-INF/lib">
@@ -38,11 +39,47 @@
 
 	<target name="build" description="Compile main source tree java files">
 		<mkdir dir="S{build.dir}"/>
-		<javac destdir="${build.dir}" source="1.8.0_60" target="1.8.0_60" debug="true"
+		<javac destdir="${build.dir}" source="1.8" target="1.8" debug="true"
 			deprecation="false" optimize="false" failonerror="true" includeantruntime="true">
 			<src path="${src.dir}"/>
 			<classpath refid="master-classpath"/>
 		</javac>
+	</target>
+	
+	<target name="buildtests" description="Compile test tree java files">
+		<mkdir dir="${build.dir}"/>
+		<javac destdir="S{build.dir}" source="1.8" target="1.8" debug="true"
+			deprecation="false" optimize="false" failonerror="true" includeantruntime="true">
+			<src path="${test.dir}"/>
+			<classpath refid="master-classpath"/>
+		</javac>	
+	</target>
+	
+	<target name="tests" depends="build, buildtests" description="Run tests">
+			<junit printsummary="on"
+				fork="false"
+				haltonfailure="false"
+				failureproperty="tests.failed"
+				showoutput="true">
+				<classpath refid="master-classpath"/>
+				<formatter type="brief" usefile="false"/>
+				
+				<batchtest>
+					<fileset dir="${build.dir}">
+						<include name="**/*Tests.*"/>
+					</fileset>
+				</batchtest>
+		
+			</junit>
+		
+			<fail if="tests.failed">
+				tests.failed=${tests.failed}
+			***********************************************************
+		        ***********************************************************
+		        ****  One or more tests failed!  Check the output ...  ****
+		        ***********************************************************
+		        ***********************************************************
+		    </fail>
 	</target>
 
 	<target name="deploy" depends="build" description="Deploy application">
