@@ -16,7 +16,7 @@
 		<fileset dir="${appserver.lib}">
 			<include name="servlet-api.jar"/>
 		</fileset>
-		<pathelement path="{$build.dir}"/>
+		<pathelement path="${build.dir}"/>
 	</path>
 
 	<target name="usage">
@@ -38,7 +38,7 @@
 	</target>
 
 	<target name="build" description="Compile main source tree java files">
-		<mkdir dir="S{build.dir}"/>
+		<mkdir dir="${build.dir}"/>
 		<javac destdir="${build.dir}" source="1.8" target="1.8" debug="true"
 			deprecation="false" optimize="false" failonerror="true" includeantruntime="true">
 			<src path="${src.dir}"/>
@@ -48,7 +48,7 @@
 	
 	<target name="buildtests" description="Compile test tree java files">
 		<mkdir dir="${build.dir}"/>
-		<javac destdir="S{build.dir}" source="1.8" target="1.8" debug="true"
+		<javac destdir="${build.dir}" source="1.8" target="1.8" debug="true"
 			deprecation="false" optimize="false" failonerror="true" includeantruntime="true">
 			<src path="${test.dir}"/>
 			<classpath refid="master-classpath"/>
