@@ -141,7 +141,7 @@
 	</target>
 
 	<target name="reload" description="Reload application in Tomcat">
-		<install url="${tomcat.manager.url}"
+		<reload url="${tomcat.manager.url}"
 			username="${tomcat.manager.username}"
 			password="${tomcat.manager.password}"
 			path="/${name}"/>
