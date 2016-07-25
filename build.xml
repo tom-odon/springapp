@@ -103,6 +103,22 @@
 			</fileset>
 		</copy>
 	</target>
+	
+	<target name="clean" description="Clean output directories">
+		<delete>
+			<fileset dir="${build.dir}">
+				<include name="**/*.class"/>
+			</fileset>
+		</delete>
+	</target>
+	
+	<target name="undeploy" description="Un-deploy application">
+		<delete>
+			<fileset dir="${deploy.path}/${name}">
+				<include name="**/*.*"/>
+			</fileset>
+		</delete>
+	</target>
 
 	<!-- Tomcat tasks -->
 	
